@@ -2,6 +2,8 @@
 agp = "8.7.3"
 converterGson = "2.9.0"
 firebaseBom = "33.9.0"
+firebasePerfPlugin = "1.4.2"
+firebasePerfPluginVersion = "1.4.3"
 hiltAndroid = "2.51"
 hiltAndroidCompiler = "2.51"
 hiltAndroidCompilerVersion = "2.50"
@@ -31,6 +33,10 @@ androidx-room-compiler = { module = "androidx.room:room-compiler" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+firebase-perf-ktx = { module = "com.google.firebase:firebase-perf-ktx" }
+firebase-perf-plugin = { module = "com.google.firebase:firebase-perf-plugin", version.ref = "firebasePerfPlugin" }
+firebase-perf-plugin-v143 = { module = "com.google.firebase:firebase-perf-plugin", version.ref = "firebasePerfPluginVersion" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
 hilt-android-compiler-v250 = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompilerVersion" }

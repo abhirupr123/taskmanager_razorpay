@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class TaskEntity(
     @PrimaryKey(autoGenerate = true) val id: Int? = null,
     val title: String,
-    val body: String,
-    val isCompleted: Boolean = false
+    val description: String,
+    val pending: Boolean = false
 )

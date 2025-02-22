@@ -30,7 +30,8 @@ class MainActivity : ComponentActivity() {
                         viewModel = viewModel,
                         onTaskClick = {
                             task->navController.navigate(Screen.TaskDetail.createRoute(task.id))
-                        }
+                        },
+                        navController
                     )
                 }
                 composable(Screen.TaskDetail.route) { backStackEntry ->

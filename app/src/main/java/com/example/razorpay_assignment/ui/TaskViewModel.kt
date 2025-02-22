@@ -1,10 +1,14 @@
 package com.example.razorpay_assignment.ui
 
+import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.razorpay_assignment.data.TaskRepository
 import com.example.razorpay_assignment.data.local.TaskEntity
+import com.google.firebase.Firebase
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.analytics
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,6 +23,7 @@ class TaskViewModel @Inject constructor(
 ) : ViewModel() {
     private val _tasks = MutableStateFlow<List<TaskEntity>>(emptyList())
     val tasks = _tasks.asStateFlow()
+    private val firebaseAnalytics: FirebaseAnalytics = Firebase.analytics // Initialize Firebase Analytics
 
     init {
         fetchTasks()
@@ -50,17 +55,29 @@ class TaskViewModel @Inject constructor(
 
     fun addTask(task: TaskEntity) {
         viewModelScope.launch { repository.addTask(task) }
+        logEvent("task_added", task)
     }
 
     fun updateTask(task: TaskEntity) {
         viewModelScope.launch { repository.updateTask(task) }
+        logEvent("task_updated", task)
     }
 
     fun deleteTask(task: TaskEntity) {
         viewModelScope.launch { repository.deleteTask(task) }
+        logEvent("task_completed", task)
     }
 
     fun getTaskById(taskId: Int?): Flow<TaskEntity?> {
         return if (taskId == null) flowOf(null) else repository.getTaskById(taskId)
+    }
+
+    private fun logEvent(eventName: String, task: TaskEntity) {
+        val bundle = Bundle().apply {
+            putString("task_id", task.id.toString())
+            putString("task_title", task.title)
+            putString("task_description", task.description)
+        }
+        firebaseAnalytics.logEvent(eventName, bundle)
     }
 }

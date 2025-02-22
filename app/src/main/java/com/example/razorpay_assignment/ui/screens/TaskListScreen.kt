@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.razorpay_assignment.ui.TaskViewModel
 import com.example.razorpay_assignment.data.local.TaskEntity
 
@@ -30,14 +31,15 @@ import com.example.razorpay_assignment.data.local.TaskEntity
 @Composable
 fun TaskListScreen(
     viewModel: TaskViewModel = viewModel(),
-    onTaskClick: (TaskEntity) -> Unit
+    onTaskClick: (TaskEntity) -> Unit,
+    navController: NavController
 ) {
     val tasks by viewModel.tasks.collectAsState(emptyList())
 
     Scaffold(
         topBar = { TopAppBar(title = { Text("Task Manager") }) },
         floatingActionButton = {
-            FloatingActionButton(onClick = { viewModel.addTask(TaskEntity(id = 0, title = "New Task", body = "Task Description"))  }) {
+            FloatingActionButton(onClick = { navController.navigate("task_detail/0")  }) {
                 Text("+")
             }
         }
@@ -76,12 +78,12 @@ fun TaskItem(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = task.title, fontWeight = FontWeight.Bold)
-                Text(text = task.body)
+                Text(text = task.description)
             }
             Checkbox(
-                checked = task.isCompleted,
+                checked = task.pending,
                 onCheckedChange = {
-                    val updatedTask = task.copy(isCompleted = it)
+                    val updatedTask = task.copy(pending = it)
                     onCompleteClick(updatedTask) // Update task status
                 }
             )

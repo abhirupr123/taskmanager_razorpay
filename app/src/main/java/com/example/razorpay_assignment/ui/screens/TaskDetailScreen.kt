@@ -30,22 +30,22 @@ fun TaskDetailScreen(
     viewModel: TaskViewModel = hiltViewModel() // Inject ViewModel
 ) {
 
+    val isNew = taskId == 0
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
 
-    val taskFlow = remember(taskId) { viewModel.getTaskById(taskId) }
-    val task by taskFlow.collectAsState(initial = null)
+    val taskFlow = if (taskId != null && taskId > 0) {
+        remember(taskId) { viewModel.getTaskById(taskId) }
+    } else {
+        null
+    }
+    val task by taskFlow?.collectAsState(initial = null) ?: remember { mutableStateOf(null) }
 
-//    val task = taskId?.let { id ->
-//        viewModel.tasks.collectAsState().value.find { it.id == id }
-//    }
 
-
-    // Populate existing task details
     LaunchedEffect(task) {
         task?.let {
             title=it.title
-            description=it.body
+            description=it.description
         }
     }
 
@@ -75,10 +75,10 @@ fun TaskDetailScreen(
                 val updatedTask = TaskEntity(
                     id = taskId ?: 0, // Use existing ID or let DB generate one
                     title = title,
-                    body = description,
-                    isCompleted = task?.isCompleted ?: false
+                    description = description,
+                    pending = task?.pending ?: false
                 )
-                if (taskId == null) {
+                if (task == null) {
                     viewModel.addTask(updatedTask) // Create new task
                 } else {
                     viewModel.updateTask(updatedTask) // Update existing task
@@ -86,7 +86,7 @@ fun TaskDetailScreen(
             }
             navController.popBackStack() // Navigate back
         }) {
-            Text(if (taskId == null) "Add Task" else "Update Task")
+            Text(if (task == null) "Add Task" else "Update Task")
         }
     }
 }

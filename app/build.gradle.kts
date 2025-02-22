@@ -6,6 +6,8 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlin-kapt")
     kotlin("kapt")
+    id("com.google.firebase.firebase-perf")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -73,4 +75,6 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.android.compiler.v250)
     kapt("androidx.room:room-compiler:2.6.1")
+    implementation(libs.firebase.perf.ktx)
+    implementation(libs.firebase.crashlytics)
 }
