@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "689323880183",
+    "project_id": "razorpay-assignment-ffbb8",
+    "storage_bucket": "razorpay-assignment-ffbb8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:689323880183:android:0890f9b35ac199ea79edf2",
+        "android_client_info": {
+          "package_name": "com.example.razorpay_assignment"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByRtfvboHzzc9L0_9JofU8UUYYnNntIto"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
