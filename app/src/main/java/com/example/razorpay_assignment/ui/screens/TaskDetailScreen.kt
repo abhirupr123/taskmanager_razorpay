@@ -1,5 +1,7 @@
 package com.example.razorpay_assignment.ui.screens
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -30,6 +33,7 @@ fun TaskDetailScreen(
     viewModel: TaskViewModel = hiltViewModel() // Inject ViewModel
 ) {
 
+    val context = LocalContext.current
     val isNew = taskId == 0
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
@@ -80,8 +84,10 @@ fun TaskDetailScreen(
                 )
                 if (task == null) {
                     viewModel.addTask(updatedTask) // Create new task
+                    Toast.makeText(context, "Task added successfully!", Toast.LENGTH_SHORT).show()
                 } else {
                     viewModel.updateTask(updatedTask) // Update existing task
+                    Toast.makeText(context, "Task updated successfully!", Toast.LENGTH_SHORT).show()
                 }
             }
             navController.popBackStack() // Navigate back
